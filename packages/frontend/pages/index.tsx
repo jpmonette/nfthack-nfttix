@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useWallet } from "../hooks/useWalletConnect";
+import Moralis from "moralis";
 
 const Home: NextPage = () => {
   const { account, provider } = useWallet();
@@ -25,8 +26,8 @@ const Home: NextPage = () => {
         <title>NFTix</title>
       </Head>
 
-      <div className="px-4 py-5 my-5 text-center">
-        <h1 className="display-5 fw-bold">Welcome to NFTix 🎟</h1>
+      <div className="px-4 pt-5 mt-5 text-center border-bottom">
+        <h1 className="display-5 fw-bold">Supercharge Your Events Now! 🎟</h1>
         <div className="col-lg-6 mx-auto">
           <p className="lead mb-4">
             NFTix is an event ticketing system that makes it easy for an event
@@ -41,18 +42,29 @@ const Home: NextPage = () => {
                 Create an Event
               </button>
             </Link>
-            <button
-              type="button"
-              className="btn btn-outline-secondary btn-lg px-4"
-              onClick={() => getNFTS()}
-            >
-              See Events
-            </button>
+            <Link href="/events/0x157b4dEB2EB6D564b4e6435A4C8E393B5eC218cB">
+              <button
+                type="button"
+                className="btn btn-outline-secondary btn-lg px-4"
+              >
+                See Events
+              </button>
+            </Link>
+          </div>
+        </div>
+        <div className="overflow-hidden">
+          <div className="container pt-5">
+            <img
+              src="/images/screenshot.png"
+              className="img-fluid rounded-3"
+              alt="Example image"
+              width="600"
+            />
           </div>
         </div>
       </div>
 
-      <div className="bg-light">
+      <div className="bg-light border-bottom">
         <div className="container px-4 py-5" id="featured-3">
           <h2 className="pb-2 border-bottom mb-5">Our Tech Stack</h2>
           <div className="d-flex justify-content-evenly">
@@ -68,6 +80,8 @@ const Home: NextPage = () => {
               src="https://polygon.technology/wp-content/uploads/2021/12/Polygon-Primary-Color-Dark.svg"
               height="100"
             />
+          </div>
+          <div className="d-flex justify-content-evenly mt-5">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg"
               height="100"
@@ -79,65 +93,40 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
-      <div className="container px-4 py-5" id="featured-3">
+      <div className="container px-4 py-5 border-bottom">
         <h2 className="pb-2 border-bottom">Features</h2>
         <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
           <div className="feature col">
-            <div className="feature-icon bg-primary bg-gradient">
-              <i
-                className="bi bi-cash"
-                style={{ fontSize: 40, color: "white" }}
-              ></i>
-            </div>
-            <h2>Powered by Polygon</h2>
-            <p>NFTix 🎟 is powered .</p>
-            <a href="#" className="icon-link">
-              Call to action
-              <svg className="bi" width="1em" height="1em">
-                <use xlinkHref="#chevron-right"></use>
-              </svg>
-            </a>
-          </div>
-          <div className="feature col">
-            <div className="feature-icon bg-primary bg-gradient">
-              <i
-                className="bi bi-person-circle"
-                style={{ fontSize: 40, color: "white" }}
-              />
-            </div>
-            <h2>Guestlist</h2>
+            <div className="feature-icon">📈</div>
+            <h2 className="fs-4">Unlock Resale Revenue </h2>
             <p>
-              Manually select a guestlist using{" "}
-              <a href="https://ens.domains/">ENS Domains</a> or by wallet ID.
+              Customise event resale conditions with smart contracts & gain
+              profit from royalties.
+              <br />
+              Save costs by using the power of the blockchain.
             </p>
           </div>
           <div className="feature col">
-            <div className="feature-icon bg-primary bg-gradient">
-              <svg className="bi" width="1em" height="1em">
-                <use xlinkHref="#toggles2"></use>
-              </svg>
-            </div>
-            <h2>Featured title</h2>
+            <div className="feature-icon">🎟</div>
+
+            <h2 className="fs-4">NFT-based Tickets</h2>
             <p>
-              Paragraph of text beneath the heading to explain the heading.
-              We&apos;ll add onto it with another sentence and probably just
-              keep going until we run out of words.
+              Painless creation & management of your events using NFT-based
+              tickets. Use NFTix to create your events, and give full freedom to
+              your attendees to safely transfer & resell their tickets anywhere!
             </p>
-            <a href="#" className="icon-link">
-              Call to action
-              <svg className="bi" width="1em" height="1em">
-                <use xlinkHref="#chevron-right"></use>
-              </svg>
-            </a>
+          </div>
+          <div className="feature col">
+            <div className="feature-icon">🔒</div>
+
+            <h2 className="fs-4">Fraud Protection</h2>
+            <p>
+              Limit counterfeiting and fake ticket sales. Protect your customers
+              & guarantee event authenticity by hardwiring security into
+              transitions.
+            </p>
           </div>
         </div>
-      </div>
-      <div className="container px-4 py-5" id="featured-3">
-        <h2 className="pb-2 border-bottom">Roadmap</h2>
-
-        <ul className="fs-1">
-          <li></li>
-        </ul>
       </div>
     </>
   );

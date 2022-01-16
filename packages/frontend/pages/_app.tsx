@@ -5,15 +5,20 @@ import type { AppProps } from "next/app";
 import { Navbar } from "../components/Navbar";
 import { useWallet } from "../hooks/useWalletConnect";
 import { Footer } from "../components/Footer";
+import { useEffect, useState } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const wallet = useWallet();
 
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setReady(true);
+    }, 1000);
+  }, []);
   console.log(wallet);
-  if (
-    // !wallet.account ||
-    !wallet.provider
-  ) {
+  if (!ready) {
     return <></>;
   }
 

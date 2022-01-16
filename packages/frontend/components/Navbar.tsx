@@ -32,15 +32,13 @@ export const Navbar = () => {
             </ul>
             <form className="d-flex">
               {!account && (
-                <>
-                  <button
-                    className="btn btn-outline-primary"
-                    type="submit"
-                    onClick={() => connect()}
-                  >
-                    Connect
-                  </button>
-                </>
+                <button
+                  className="btn btn-outline-primary"
+                  type="submit"
+                  onClick={connect}
+                >
+                  Connect
+                </button>
               )}
               {account && (
                 <>

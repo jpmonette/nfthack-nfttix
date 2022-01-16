@@ -1,7 +1,7 @@
 import { Web3Provider } from "@ethersproject/providers";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { ethers, providers } from "ethers";
-import React, { useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import { lookupENS } from "../libs/helpers";
 
 export function useWallet() {
@@ -13,20 +13,25 @@ export function useWallet() {
   }, []);
 
   const init = async () => {
-    const provider = await detectEthereumProvider();
+    try {
+      const provider = await detectEthereumProvider();
 
-    const ethersProvider = new providers.Web3Provider(
-      provider as ethers.providers.ExternalProvider
-    );
+      const ethersProvider = new providers.Web3Provider(
+        provider as ethers.providers.ExternalProvider
+      );
 
-    const accounts = await ethersProvider.listAccounts();
-    const alias = await lookupENS(accounts[0]);
-    setAccount(alias || accounts[0]);
-    setProvider(ethersProvider);
-    console.log();
+      const accounts = await ethersProvider.listAccounts();
+      const alias = await lookupENS(accounts[0]);
+      setAccount(alias || accounts[0]);
+      setProvider(ethersProvider);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  const connect = async () => {
+  const connect: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.preventDefault();
+
     try {
       // Will open the MetaMask UI
       // You should disable this button while the request is pending!

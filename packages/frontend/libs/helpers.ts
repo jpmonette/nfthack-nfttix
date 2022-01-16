@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 
 export const formatAccount = (addrOrName: string) => {
   if (!addrOrName) return "";
-  if (addrOrName.length !== 42) return addrOrName;
+  if (addrOrName.length < 42) return addrOrName;
   return (
     addrOrName.slice(0, 6) + "..." + addrOrName.slice(addrOrName.length - 4)
   );

@@ -70,7 +70,7 @@ const Home: NextPage = () => {
       NFTixJSON.bytecode,
       provider?.getSigner()
     );
-    const contract = await contractFactory.deploy(eventName, "NFTix", url);
+    const contract = await contractFactory.deploy("NFTix", "NFTix", url);
 
     setLoading(true);
     await contract.deployed();
@@ -155,9 +155,23 @@ const Home: NextPage = () => {
                 onChange={(e) => setDescription(e.currentTarget.value)}
               />
             </div>
-            <div className="card bg-info mb-4">
+            <div className="card bg-light mb-4 mt-5">
               <div className="card-body">
                 <h5 className="card-title">Coming Soon ✨</h5>
+
+                <div className="mb-3">
+                  <label htmlFor="location" className="form-label">
+                    Ticket artwork:
+                  </label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="location"
+                    placeholder="Remote"
+                    disabled
+                  />
+                  <small>This will be displayed as the image for the NFT</small>
+                </div>
 
                 <div className="row">
                   <div className="col mb-3">
@@ -251,7 +265,7 @@ const Home: NextPage = () => {
               </div>
             </div>
             <div className="btn-group float-end" role="group">
-              <Link href={"/"}>
+              {/* <Link href={"/"}>
                 <button
                   type="button"
                   className="btn btn-outline-danger"
@@ -259,10 +273,10 @@ const Home: NextPage = () => {
                 >
                   Cancel
                 </button>
-              </Link>
+              </Link> */}
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-primary btn-lg"
                 onClick={handleDeploy}
                 disabled={loading}
               >
@@ -276,7 +290,7 @@ const Home: NextPage = () => {
                     Creating...
                   </>
                 )}{" "}
-                {!loading && "Create Event"}
+                {!loading && "Create Event NFT"}
               </button>
             </div>
           </div>

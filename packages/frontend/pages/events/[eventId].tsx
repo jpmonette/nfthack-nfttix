@@ -34,6 +34,7 @@ const Home: NextPage = () => {
     description: "",
     date: "",
   });
+  const [metadataUri, setMetadataUri] = useState<string>();
   const [initialLoad, setInitialLoad] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -82,6 +83,7 @@ const Home: NextPage = () => {
       setEventName(name);
       setOwner(owner);
       setMetadata(metadata);
+      setMetadataUri(metadataURI);
       setInitialLoad(false);
       await refreshAttendees();
     } catch (e) {
@@ -110,6 +112,10 @@ const Home: NextPage = () => {
     buy(account as string);
   };
 
+  const handleInviteCelebrity = () => {
+    buy("0xd8da6bf26964af9d7eed9e03e53415d37aa96045");
+  };
+
   const buy = async (recipient: string) => {
     if (!provider) return;
 
@@ -121,23 +127,24 @@ const Home: NextPage = () => {
     try {
       setBuying(true);
       const url = await createTokenMetadata({
-        name: metadata.name,
+        name: metadata.name + ` (${owners.length})`,
         description: metadata.description,
         external_link: `https://nftix.jpmo.net/events/${eventId}`,
         attributes: [
           {
             display_type: "date",
-            trait_type: "Event Date",
+            trait_type: "Date",
             value: DateTime.fromISO(metadata.date, {
               locale: "en",
             }).toMillis(),
           },
           {
-            display_type: "text",
-            trait_type: "Event Date",
-            value: DateTime.fromISO(metadata.date, {
-              locale: "en",
-            }).toMillis(),
+            trait_type: "Location",
+            value: location,
+          },
+          {
+            trait_type: "Ticket Type",
+            value: "VIP",
           },
         ],
       });
@@ -150,7 +157,9 @@ const Home: NextPage = () => {
       console.log("error", e);
     } finally {
       setBuying(false);
-      refreshAttendees();
+      setTimeout(() => {
+        refreshAttendees();
+      }, 2000);
     }
 
     console.log("Contract deployed to:", contract.address);
@@ -159,13 +168,13 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>NFTHack 2022 - NFTix</title>
+        <title>View Event - NFTix</title>
       </Head>
 
       <div className={"container"}>
         <div className="row justify-content-center">
-          <div className="col-5">
-            <nav className={"mb-5"}>
+          <div className="col-8">
+            <nav className={"mb-3"}>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
                   <Link href={"/"}>
@@ -234,7 +243,6 @@ const Home: NextPage = () => {
                         ),
                       }}
                     ></code>
-
                     <div
                       className="text-center mt-4"
                       role="group"
@@ -242,7 +250,7 @@ const Home: NextPage = () => {
                     >
                       <button
                         type="button"
-                        className="btn btn-primary me-1"
+                        className="btn btn-primary me-1 btn-lg"
                         onClick={handleBuy}
                         disabled={buying}
                       >
@@ -264,7 +272,7 @@ const Home: NextPage = () => {
                       </button>
                       <button
                         type="button"
-                        className="btn btn-danger"
+                        className="btn btn-danger btn-lg me-1"
                         onClick={handleGive}
                         disabled={buying}
                       >
@@ -280,48 +288,76 @@ const Home: NextPage = () => {
                         )}{" "}
                         {!buying && (
                           <>
-                            <i className="bi bi-heart"></i> Give 1 to Vitalik
+                            <i className="bi bi-heart"></i> Give a Ticket
+                          </>
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-dark btn-lg"
+                        onClick={handleInviteCelebrity}
+                        disabled={buying}
+                      >
+                        {buying && (
+                          <>
+                            <span
+                              className="spinner-border spinner-border-sm"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>{" "}
+                            Buying...
+                          </>
+                        )}{" "}
+                        {!buying && (
+                          <>
+                            <i className="bi bi-star-fill"></i> Invite Vitalik
                           </>
                         )}
                       </button>
                     </div>
-
                     <table className="table font-monospace mt-4 mb-4">
                       <thead>
-                        <th>Ticket ID</th>
-                        <th className="text-right">Attendees</th>
+                        <th style={{ width: 10 }}>ID</th>
+                        <th className="text-center">Attendees</th>
+                        <th className="text-end">Actions</th>
                       </thead>
                       <tbody>
                         {owners.map((owner, key) => (
                           <tr key={key}>
                             <td>#{key + 1}</td>
-                            <td className="font-monospace">
-                              <div className="d-flex align-middle">
-                                <Blockies
-                                  seed={owner.address}
-                                  size={6}
-                                  scale={4}
-                                  className={"rounded-3 me-2"}
-                                />
-                                <a
-                                  href={`https://mumbai.polygonscan.com/address/${eventId}`}
-                                  target={"_blank"}
-                                  rel="noreferrer"
-                                >
-                                  {owner.name &&
-                                    owner.name +
-                                      " (" +
-                                      formatAccount(owner.address) +
-                                      ")"}
-                                  {!owner.name && formatAccount(owner.address)}
-                                </a>
-                              </div>
+                            <td className="text-center">
+                              <Blockies
+                                seed={owner.address}
+                                size={6}
+                                scale={4}
+                                className={"rounded-3 me-2"}
+                              />
+                              <a
+                                href={`https://mumbai.polygonscan.com/address/${owner.address}`}
+                                target={"_blank"}
+                                rel="noreferrer"
+                              >
+                                {owner.name && owner.name}
+                                {!owner.name && formatAccount(owner.address)}
+                              </a>
+                            </td>
+                            <td className="text-end">
+                              <a
+                                className="btn btn-dark btn-sm"
+                                href={`https://testnets.opensea.io/assets/mumbai/${eventId}/${
+                                  key + 1
+                                }`}
+                                target={"_blank"}
+                                rel="noreferrer"
+                              >
+                                View on OpenSea
+                              </a>
                             </td>
                           </tr>
                         ))}
                         {!initialLoad && !loading && owners.length === 0 && (
                           <tr>
-                            <td colSpan={2} className="text-center">
+                            <td colSpan={3} className="text-center">
                               No attendee 😭
                             </td>
                           </tr>
@@ -329,7 +365,7 @@ const Home: NextPage = () => {
                         {initialLoad ||
                           (loading && (
                             <tr>
-                              <td colSpan={2}>
+                              <td colSpan={3}>
                                 <div className="d-flex justify-content-center">
                                   <div className="spinner-border" role="status">
                                     <span className="visually-hidden">
@@ -356,21 +392,21 @@ const Home: NextPage = () => {
                           type="button"
                           disabled
                         >
-                          Collect Service Fee
+                          Collect Sales Fee
                         </button>
                         <button
                           className="btn btn-danger"
                           type="button"
                           disabled
                         >
-                          Refund Guests
+                          Refund All Guests
                         </button>
                         <button
                           className="btn btn-danger"
                           type="button"
                           disabled
                         >
-                          Block Event
+                          Freeze Sales
                         </button>
                       </div>
                     </div>
@@ -389,6 +425,19 @@ const Home: NextPage = () => {
                     >
                       <code className="float-end">
                         {formatAccount(eventId as string)}{" "}
+                        <i className="bi bi-box-arrow-up-right"></i>
+                      </code>
+                    </a>
+                  </li>
+                  <li className="list-group-item">
+                    Event Metadata (IPFS)
+                    <a href={metadataUri} target={"_blank"} rel="noreferrer">
+                      <code className="float-end">
+                        {formatAccount(
+                          metadataUri?.split("/")[
+                            metadataUri?.split("/").length - 1
+                          ] as string
+                        )}{" "}
                         <i className="bi bi-box-arrow-up-right"></i>
                       </code>
                     </a>
