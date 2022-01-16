@@ -2,6 +2,7 @@ import { Web3Provider } from "@ethersproject/providers";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { ethers, providers } from "ethers";
 import React, { useEffect, useState } from "react";
+import { lookupENS } from "../libs/helpers";
 
 export function useWallet() {
   const [provider, setProvider] = useState<Web3Provider>();
@@ -19,8 +20,10 @@ export function useWallet() {
     );
 
     const accounts = await ethersProvider.listAccounts();
-    setAccount(accounts[0]);
+    const alias = await lookupENS(accounts[0]);
+    setAccount(alias || accounts[0]);
     setProvider(ethersProvider);
+    console.log();
   };
 
   const connect = async () => {

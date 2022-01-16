@@ -1,9 +1,10 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.css";
-// import '../styles/globals.css'
+import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Navbar } from "../components/Navbar";
 import { useWallet } from "../hooks/useWalletConnect";
+import { Footer } from "../components/Footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const wallet = useWallet();
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Navbar />
       <Component {...pageProps} />
+      <Footer />
     </>
   );
 }

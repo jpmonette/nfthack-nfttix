@@ -51,6 +51,94 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
+
+      <div className="bg-light">
+        <div className="container px-4 py-5" id="featured-3">
+          <h2 className="pb-2 border-bottom mb-5">Our Tech Stack</h2>
+          <div className="d-flex justify-content-evenly">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/c/c2/IPFS_logo.png"
+              height="100"
+            />
+            <img
+              src="https://avatars.githubusercontent.com/u/34167658?s=200&v=4"
+              height="100"
+            />
+            <img
+              src="https://polygon.technology/wp-content/uploads/2021/12/Polygon-Primary-Color-Dark.svg"
+              height="100"
+            />
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg"
+              height="100"
+            />
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1920px-React-icon.svg.png"
+              height="100"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="container px-4 py-5" id="featured-3">
+        <h2 className="pb-2 border-bottom">Features</h2>
+        <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
+          <div className="feature col">
+            <div className="feature-icon bg-primary bg-gradient">
+              <i
+                className="bi bi-cash"
+                style={{ fontSize: 40, color: "white" }}
+              ></i>
+            </div>
+            <h2>Powered by Polygon</h2>
+            <p>NFTix 🎟 is powered .</p>
+            <a href="#" className="icon-link">
+              Call to action
+              <svg className="bi" width="1em" height="1em">
+                <use xlinkHref="#chevron-right"></use>
+              </svg>
+            </a>
+          </div>
+          <div className="feature col">
+            <div className="feature-icon bg-primary bg-gradient">
+              <i
+                className="bi bi-person-circle"
+                style={{ fontSize: 40, color: "white" }}
+              />
+            </div>
+            <h2>Guestlist</h2>
+            <p>
+              Manually select a guestlist using{" "}
+              <a href="https://ens.domains/">ENS Domains</a> or by wallet ID.
+            </p>
+          </div>
+          <div className="feature col">
+            <div className="feature-icon bg-primary bg-gradient">
+              <svg className="bi" width="1em" height="1em">
+                <use xlinkHref="#toggles2"></use>
+              </svg>
+            </div>
+            <h2>Featured title</h2>
+            <p>
+              Paragraph of text beneath the heading to explain the heading.
+              We&apos;ll add onto it with another sentence and probably just
+              keep going until we run out of words.
+            </p>
+            <a href="#" className="icon-link">
+              Call to action
+              <svg className="bi" width="1em" height="1em">
+                <use xlinkHref="#chevron-right"></use>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="container px-4 py-5" id="featured-3">
+        <h2 className="pb-2 border-bottom">Roadmap</h2>
+
+        <ul className="fs-1">
+          <li></li>
+        </ul>
+      </div>
     </>
   );
 };

@@ -13,18 +13,18 @@ const apiKey = process.env.NFTSTORAGE_KEY as string;
 const client = new NFTStorage({ token: apiKey });
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const file = fs.readFileSync("./pages/api/favicon.png");
-  const fileCid = await client.storeBlob(new Blob([file]));
-  const fileUrl = "https://ipfs.io/ipfs/" + fileCid;
-
-  const metadataObject = {
-    ...req.body,
-    image: fileUrl,
-  };
-  // @ts-ignore
-  const metadata = new Blob(JSON.stringify(metadataObject), {
-    type: "application/json",
-  });
+  const metadata = new Blob(
+    // @ts-ignore
+    JSON.stringify({
+      name: req.body.name,
+      date: req.body.date,
+      location: req.body.location,
+      description: req.body.description,
+    }),
+    {
+      type: "application/json",
+    }
+  );
 
   const metadataCid = await client.storeBlob(metadata);
   const metadataUrl = "https://ipfs.io/ipfs/" + metadataCid;
